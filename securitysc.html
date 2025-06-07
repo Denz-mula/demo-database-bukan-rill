@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Security Script Bot</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: #f0f4f8;
+    margin: 0; padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #2e3a59;
+  }
+  #app {
+    background: #fff;
+    width: 320px;
+    padding: 24px 28px;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(46,58,89,0.12);
+  }
+  h1 {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.8rem;
+    margin-bottom: 24px;
+    user-select: none;
+  }
+  label {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 6px;
+    display: block;
+  }
+  input[type="password"],
+  input[type="text"] {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #cbd7e2;
+    border-radius: 10px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    outline-offset: 3px;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+  }
+  input[type="password"]:focus,
+  input[type="text"]:focus {
+    border-color: #4f89f9;
+    box-shadow: 0 0 8px rgba(79,137,249,0.4);
+  }
+  button {
+    padding: 10px 16px;
+    background-color: #4f89f9;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 1rem;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+    min-width: 90px;
+    margin-left: 10px;
+  }
+  button:hover {
+    background-color: #3b6adf;
+  }
+  #login-btn {
+    width: 100%;
+    margin-left: 0;
+    padding: 12px 0;
+  }
+  #login-error {
+    color: #ef4f4f;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-align: center;
+    height: 22px;
+    user-select: none;
+    margin-top: -16px;
+    margin-bottom: 20px;
+  }
+  #main-section {
+    display: none;
+  }
+  #main-section.active {
+    display: block;
+  }
+  #add-form {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 0;
+  }
+  #add-number {
+    flex: 1;
+    padding: 12px 16px;
+    font-size: 1rem;
+    border: 2px solid #cbd7e2;
+    border-radius: 10px;
+    outline-offset: 3px;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+  }
+  #add-number:focus {
+    border-color: #4f89f9;
+    box-shadow: 0 0 8px rgba(79,137,249,0.4);
+  }
+  #add-btn {
+    width: auto;
+    padding: 12px 20px;
+    margin-left: 10px;
+    background-color: #2f9e44;
+    border-radius: 10px;
+  }
+  #add-btn:hover {
+    background-color: #247b36;
+  }
+  #search-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #cbd7e2;
+    border-radius: 10px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    outline-offset: 3px;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+  }
+  #search-input:focus {
+    border-color: #4f89f9;
+    box-shadow: 0 0 8px rgba(79,137,249,0.4);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  thead th {
+    text-align: left;
+    padding: 12px 10px;
+    font-weight: 600;
+    border-bottom: 2px solid #cbd7e2;
+  }
+  tbody tr:hover {
+    background-color: #f0f6ff;
+  }
+  tbody td {
+    padding: 12px 10px;
+    border-right: 1.5px solid #e1e9f4;
+    font-size: 1rem;
+  }
+  tbody td:last-child {
+    border-right: none;
+  }
+  .status-active {
+    color: #2f9e44;
+    font-weight: 700;
+  }
+  .status-notactive {
+    color: #ef4f4f;
+    font-weight: 700;
+  }
+  #info {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #6a7b94;
+    user-select: none;
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>Security Script Bot</h1>
+
+  <section id="login-section">
+    <label for="password">Masukkan Password:</label>
+    <input type="password" id="password" placeholder="Password" autocomplete="off" />
+    <button id="login-btn">Login</button>
+    <div id="login-error"></div>
+  </section>
+
+  <section id="main-section">
+    <label for="add-number">Tambah Nomor Bot:</label>
+    <form id="add-form" onsubmit="return false;">
+      <input type="text" id="add-number" placeholder="Masukkan nomor bot" autocomplete="off" />
+      <button id="add-btn">Tambah</button>
+    </form>
+
+    <label for="search-input">Cari Nomor Bot:</label>
+    <input type="text" id="search-input" placeholder="Cari nomor..." autocomplete="off" />
+
+    <table>
+      <thead>
+        <tr>
+          <th>Nomor Bot</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="bot-list"></tbody>
+    </table>
+
+    <div id="info">* Nomor bot tidak bisa dihapus lewat UI</div>
+  </section>
+</div>
+
+<script>
+(() => {
+  const PASSWORD = "hnz12";
+
+  const loginSection = document.getElementById("login-section");
+  const mainSection = document.getElementById("main-section");
+  const loginBtn = document.getElementById("login-btn");
+  const passwordInput = document.getElementById("password");
+  const loginError = document.getElementById("login-error");
+
+  const addForm = document.getElementById("add-form");
+  const addNumberInput = document.getElementById("add-number");
+  const addBtn = document.getElementById("add-btn");
+  const searchInput = document.getElementById("search-input");
+  const botList = document.getElementById("bot-list");
+
+  let bots = [];
+
+  function saveBots() {
+    localStorage.setItem("bots", JSON.stringify(bots));
+  }
+
+  function loadBots() {
+    const data = localStorage.getItem("bots");
+    if (data) {
+      bots = JSON.parse(data);
+    }
+  }
+
+  function renderBots(filter = "") {
+    botList.innerHTML = "";
+    const filtered = bots.filter(bot => bot.number.includes(filter));
+    filtered.forEach((bot) => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${bot.number}</td>
+        <td class="${bot.active ? "status-active" : "status-notactive"}">${bot.active ? "Active" : "Not Active"}</td>
+      `;
+      botList.appendChild(tr);
+    });
+  }
+
+  loginBtn.addEventListener("click", () => {
+    if (passwordInput.value === PASSWORD) {
+      loginSection.style.display = "none";
+      mainSection.classList.add("active");
+      loadBots();
+      renderBots();
+      loginError.textContent = "";
+    } else {
+      loginError.textContent = "Password salah!";
+    }
+  });
+
+  addBtn.addEventListener("click", () => {
+    const val = addNumberInput.value.trim();
+    if (!val) return alert("Masukkan nomor bot");
+    if (bots.some(bot => bot.number === val)) {
+      return alert("Nomor sudah ada!");
+    }
+    bots.push({ number: val, active: true });
+    saveBots();
+    renderBots(searchInput.value.trim());
+    addNumberInput.value = "";
+  });
+
+  searchInput.addEventListener("input", () => {
+    renderBots(searchInput.value.trim());
+  });
+})();
+</script>
+</body>
+</html>
